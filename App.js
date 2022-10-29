@@ -3,7 +3,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useCallback } from "react";
 import { View, StyleSheet, Button, Alert } from "react-native";
 import * as Font from "expo-font";
-import AppLoading from "expo";
 import * as SplashScreen from "expo-splash-screen";
 import RegistrationScreen from "./.expo/screens/RegistrationScreen";
 
@@ -22,15 +21,7 @@ export default function App() {
     setAppIsReady(true);
   };
   loadApplication();
-  // if (!isReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={loadApplication}
-  //       onFinish={() => setIsReady(true)}
-  //       onError={console.warn}
-  //     />
-  //   );
-  // }
+
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
       await SplashScreen.hideAsync();
