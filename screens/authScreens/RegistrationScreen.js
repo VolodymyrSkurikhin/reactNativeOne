@@ -24,7 +24,6 @@ export default function RegistrationScreen({ navigation }) {
   const keyboardHide = () => {
     setIsKeyboardShown(false);
     Keyboard.dismiss();
-    console.log(state);
     setState(initialState);
   };
 

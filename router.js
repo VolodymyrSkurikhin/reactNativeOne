@@ -1,12 +1,18 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
-import RegistrationScreen from "./expo/screens/authScreens/RegistrationScreen";
-import LoginScreen from "./expo/screens/authScreens/LoginScreen";
-import CreateScreen from "./expo/screens/mainScreens/CreateScreen";
-import PostsScreen from "./expo/screens/mainScreens/PostsSceen";
-import ProfileScreen from "./expo/screens/mainScreens/ProfileScreen";
+import RegistrationScreen from "./screens/authScreens/RegistrationScreen";
+import LoginScreen from "./screens/authScreens/LoginScreen";
+import CreateScreen from "./screens/mainScreens/CreateScreen";
+import PostsScreen from "./screens/mainScreens/PostsSceen";
+import ProfileScreen from "./screens/mainScreens/ProfileScreen";
+
+const AuthStack = createNativeStackNavigator();
+const MainTab = createBottomTabNavigator();
 
 export const useRoute = (isAuth) => {
   if (!isAuth) {
@@ -18,10 +24,34 @@ export const useRoute = (isAuth) => {
     );
   }
   return (
-    <MainTab.Navigator>
-      <MainTab.Screen name="Posts" componenet={PostsScreen} />
-      <MainTab.Screen name="Create" componenet={CreateScreen} />
-      <MainTab.Screen name="Profile" componenet={ProfileScreen} />
+    <MainTab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+      <MainTab.Screen
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <MaterialCommunityIcons name="post" size={size} color={color} />
+          ),
+        }}
+        name="Posts"
+        componenet={PostsScreen}
+      />
+      <MainTab.Screen
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <MaterialIcons name="post-add" size={size} color={color} />
+          ),
+        }}
+        name="Create"
+        componenet={CreateScreen}
+      />
+      <MainTab.Screen
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <AntDesign name="profile" size={size} color={color} />
+          ),
+        }}
+        name="Profile"
+        componenet={ProfileScreen}
+      />
     </MainTab.Navigator>
   );
 };
