@@ -45,7 +45,7 @@ const loadApplication = async () => {
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const routing = useRoute(null);
+  const routing = useRoute({});
   const loadApplication = async () => {
     await Font.loadAsync({
       "Oswald-SemiBold": require("./assets/fonts/Oswald-SemiBold.ttf"),

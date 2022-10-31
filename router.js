@@ -7,9 +7,9 @@ import { AntDesign } from "@expo/vector-icons";
 
 import RegistrationScreen from "./screens/authScreens/RegistrationScreen";
 import LoginScreen from "./screens/authScreens/LoginScreen";
-import CreateScreen from "./screens/mainScreens/CreateScreen";
-import PostsScreen from "./screens/mainScreens/PostsSceen";
-import ProfileScreen from "./screens/mainScreens/ProfileScreen";
+import CreateScreen from "./screens/mainScreens/CreateScreen.js";
+import PostsScreen from "./screens/mainScreens/PostsScreen.js";
+import ProfileScreen from "./screens/mainScreens/ProfileScreen.js";
 
 const AuthStack = createNativeStackNavigator();
 const MainTab = createBottomTabNavigator();
@@ -32,7 +32,7 @@ export const useRoute = (isAuth) => {
           ),
         }}
         name="Posts"
-        componenet={PostsScreen}
+        component={PostsScreen}
       />
       <MainTab.Screen
         options={{
@@ -41,7 +41,7 @@ export const useRoute = (isAuth) => {
           ),
         }}
         name="Create"
-        componenet={CreateScreen}
+        component={CreateScreen}
       />
       <MainTab.Screen
         options={{
@@ -50,7 +50,7 @@ export const useRoute = (isAuth) => {
           ),
         }}
         name="Profile"
-        componenet={ProfileScreen}
+        component={ProfileScreen}
       />
     </MainTab.Navigator>
   );
