@@ -5,14 +5,16 @@ import { View, StyleSheet } from "react-native";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import RegistrationScreen from "./.expo/screens/authScreens/RegistrationScreen";
-import LoginScreen from "./.expo/screens/authScreens/LoginScreen";
-import CreateScreen from "./.expo/screens/mainScreens/CreateScreen";
-import PostsScreen from "./.expo/screens/mainScreens/PostsSceen";
-import ProfileScreen from "./.expo/screens/mainScreens/ProfileScreen";
+import { useRoute } from "./router";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+// import RegistrationScreen from "./.expo/screens/authScreens/RegistrationScreen";
+// import LoginScreen from "./.expo/screens/authScreens/LoginScreen";
+// import CreateScreen from "./.expo/screens/mainScreens/CreateScreen";
+// import PostsScreen from "./.expo/screens/mainScreens/PostsSceen";
+// import ProfileScreen from "./.expo/screens/mainScreens/ProfileScreen";
 
 const loadApplication = async () => {
   await Font.loadAsync({
