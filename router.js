@@ -24,7 +24,9 @@ export const useRoute = (isAuth) => {
     );
   }
   return (
-    <MainTab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+    <MainTab.Navigator
+      screenOptions={{ tabBarShowLabel: false, headerShown: false }}
+    >
       <MainTab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
