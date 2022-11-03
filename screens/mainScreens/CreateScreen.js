@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 // import { TouchableOpacity } from "react-native-web";
 
-const CreateScreen = () => {
+const CreateScreen = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [ready, setReady] = useState(false);
@@ -28,13 +28,17 @@ const CreateScreen = () => {
       current === CameraType.back ? CameraType.front : CameraType.back
     );
   }
+  const sendPhoto = () => {
+    navigation.navigate("Posts", { photo });
+    setPhoto(null);
+  };
   if (!permission) {
     return <Text>No access to camera</Text>;
   }
   return (
     <View style={styles.container}>
       <Camera
-        style={styles.camera}
+        style={{ ...styles.camera, height: photo ? "75%" : "100%" }}
         onCameraReady={() => setReady(true)}
         ref={setCamera}
         type={type}
@@ -56,6 +60,13 @@ const CreateScreen = () => {
           <Text style={styles.snap}>SNAP</Text>
         </TouchableOpacity>
       </Camera>
+      {photo && (
+        <View>
+          <TouchableOpacity onPress={sendPhoto} style={styles.sendBtn}>
+            <Text style={styles.sendLabel}>SEND</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
@@ -67,7 +78,7 @@ const styles = StyleSheet.create({
     // alignItems: "center",
   },
   camera: {
-    flex: 1,
+    // flex: 1,
     // height: 300,
     // paddingTop: 200,
     // top: 20,
@@ -109,6 +120,20 @@ const styles = StyleSheet.create({
     // marginTop: 200,
   },
   snap: { color: "#fff" },
+  sendBtn: {
+    marginHorizontal: 30,
+    height: 40,
+    borderWidth: 2,
+    borderColor: "#20b2aa",
+    borderRadius: 10,
+    marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  sendLabel: {
+    color: "#20b2aa",
+    fontSize: 20,
+  },
 });
 
 export default CreateScreen;
