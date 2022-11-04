@@ -25,7 +25,10 @@ export const useRoute = (isAuth) => {
   }
   return (
     <MainTab.Navigator
-      screenOptions={{ tabBarShowLabel: false, headerShown: false }}
+      screenOptions={{
+        tabBarShowLabel: false,
+        headerShown: false,
+      }}
     >
       <MainTab.Screen
         options={{
@@ -41,6 +44,7 @@ export const useRoute = (isAuth) => {
           tabBarIcon: ({ focused, color, size }) => (
             <MaterialIcons name="post-add" size={size} color={color} />
           ),
+          unmountOnBlur: true,
         }}
         name="Create"
         component={CreateScreen}

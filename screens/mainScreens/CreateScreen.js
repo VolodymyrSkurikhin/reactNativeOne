@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Camera, CameraType } from "expo-camera";
+import * as Location from "expo-location";
 // import { TouchableOpacity } from "react-native-web";
 
 const CreateScreen = ({ navigation }) => {
@@ -8,14 +9,19 @@ const CreateScreen = ({ navigation }) => {
   const [photo, setPhoto] = useState(null);
   const [ready, setReady] = useState(false);
   const [type, setType] = useState(CameraType.front);
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [cameraPermission, requestCameraPermission] =
+    Camera.useCameraPermissions();
+  const [locationPermission, requestLocationPermission] =
+    Location.useForegroundPermissions();
   useEffect(() => {
-    requestPermission();
+    requestCameraPermission();
+    requestLocationPermission();
   }, []);
   // const checkCameraReady=()=>{}
   const takePhoto = async () => {
     if (ready) {
       const photo = await camera.takePictureAsync();
+      const location = await Location.getCurrentPositionAsync();
       setPhoto(photo.uri);
       console.log("photo", photo);
       return;
@@ -32,8 +38,11 @@ const CreateScreen = ({ navigation }) => {
     navigation.navigate("Posts", { photo });
     setPhoto(null);
   };
-  if (!permission) {
+  if (!cameraPermission) {
     return <Text>No access to camera</Text>;
+  }
+  if (!locationPermission) {
+    return <Text>No access to location</Text>;
   }
   return (
     <View style={styles.container}>
