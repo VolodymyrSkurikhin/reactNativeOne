@@ -24,6 +24,8 @@ const CreateScreen = ({ navigation }) => {
       const location = await Location.getCurrentPositionAsync();
       setPhoto(photo.uri);
       console.log("photo", photo);
+      console.log("latitude", location.coords.latitude);
+      console.log("longitude", location.coords.longitude);
       return;
     }
     console.log("camera is not ready");
@@ -35,7 +37,7 @@ const CreateScreen = ({ navigation }) => {
     );
   }
   const sendPhoto = () => {
-    navigation.navigate("Posts", { photo });
+    navigation.navigate("DefaultScreenPosts", { photo });
     setPhoto(null);
   };
   if (!cameraPermission) {
