@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export const CommentsScreen = () => {
+export const CommentsScreen = () => (
   <View style={styles.container}>
     <Text>Comments screen</Text>
-  </View>;
-};
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {

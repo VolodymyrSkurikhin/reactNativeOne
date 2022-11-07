@@ -6,6 +6,7 @@ import {
   CommentsScreen,
   MapScreen,
 } from "../nestedScreens";
+// import CommentsScreen from "../nestedScreens/CommentsScreen";
 
 const NestedScreen = createNativeStackNavigator();
 

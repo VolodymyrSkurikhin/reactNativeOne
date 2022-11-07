@@ -1,12 +1,15 @@
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 // import { StyleSheet, Text, View } from "react-native";
 import React, { useState, useCallback } from "react";
-import { View, StyleSheet } from "react-native";
+// import { View, StyleSheet } from "react-native";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 
+import { Provider } from "react-redux";
+
 import { useRoute } from "./router";
+import { store } from "./redux/store";
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -64,22 +67,10 @@ export default function App() {
     return null;
   }
   return (
-    <NavigationContainer>{routing}</NavigationContainer>
-    // <View
-    //   style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-    //   onLayout={onLayoutRootView}
-    // >
-    //   <RegistrationScreen />
-    // </View>
+    <Provider store={store}>
+      <NavigationContainer>{routing}</NavigationContainer>
+    </Provider>
   );
 }
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });
 
 // export default { App };
