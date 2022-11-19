@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 
 import { useRoute } from "./router";
 import { store } from "./redux/store";
+import db from "./firebase/config";
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -19,11 +20,11 @@ import { store } from "./redux/store";
 // import PostsScreen from "./.expo/screens/mainScreens/PostsSceen";
 // import ProfileScreen from "./.expo/screens/mainScreens/ProfileScreen";
 
-const loadApplication = async () => {
-  await Font.loadAsync({
-    "Oswald-SemiBold": require("./assets/fonts/Oswald-SemiBold.ttf"),
-  });
-};
+// const loadApplication = async () => {
+//   await Font.loadAsync({
+//     "Oswald-SemiBold": require("./assets/fonts/Oswald-SemiBold.ttf"),
+//   });
+// };
 
 // const AuthStack = createNativeStackNavigator();
 // const MainTab = createBottomTabNavigator();
@@ -48,7 +49,11 @@ const loadApplication = async () => {
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const routing = useRoute({});
+  const [user, setUser] = useState(null);
+
+  db.auth().onAuthStateChanged((user) => setUser(user));
+  const routing = useRoute(user);
+
   const loadApplication = async () => {
     await Font.loadAsync({
       "Oswald-SemiBold": require("./assets/fonts/Oswald-SemiBold.ttf"),

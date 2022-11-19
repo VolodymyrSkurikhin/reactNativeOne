@@ -12,6 +12,9 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from "react-native";
+import { useDispatch } from "react-redux";
+
+import { authSignUpUser } from "../../redux/auth/authOperations";
 
 const initialState = { email: "", password: "", nickname: "" };
 
@@ -21,10 +24,16 @@ export default function RegistrationScreen({ navigation }) {
   const [dimensions, setDimensions] = useState(
     Dimensions.get("window").width - 50 * 2
   );
-  const keyboardHide = () => {
+  const dispatch = useDispatch();
+  const handleSubmit = () => {
     setIsKeyboardShown(false);
     Keyboard.dismiss();
+    dispatch(authSignUpUser(state));
     setState(initialState);
+  };
+  const keyboardHide = () => {
+    Keyboard.dismiss();
+    setIsKeyboardShown(false);
   };
 
   useEffect(() => {
@@ -64,7 +73,7 @@ export default function RegistrationScreen({ navigation }) {
                   style={styles.input}
                   textAlign={"center"}
                   onFocus={() => setIsKeyboardShown(true)}
-                  value={state.email}
+                  value={state.nickname}
                   onChangeText={(value) =>
                     setState((prevState) => ({ ...prevState, nickname: value }))
                   }
@@ -98,7 +107,7 @@ export default function RegistrationScreen({ navigation }) {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.btn}
-                onPress={keyboardHide}
+                onPress={handleSubmit}
               >
                 <Text style={styles.btnTitle}>SIGN UP</Text>
               </TouchableOpacity>
@@ -139,7 +148,7 @@ const styles = StyleSheet.create({
   form: {},
   header: {
     alignItems: "center",
-    marginBottom: 80,
+    marginBottom: 40,
   },
   title: {
     fontSize: 40,
@@ -156,8 +165,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#f0f8ff",
     height: 40,
+    fontWeight: "700",
+    fontSize: 30,
     borderRadius: 6,
-    color: "#f0f8ff",
+    color: "#000000",
   },
   btn: {
     borderRadius: 6,

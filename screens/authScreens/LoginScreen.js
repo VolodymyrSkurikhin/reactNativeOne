@@ -12,6 +12,9 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from "react-native";
+import { useDispatch } from "react-redux";
+
+import { authSignInUser } from "../../redux/auth/authOperations";
 
 const initialState = { email: "", password: "" };
 
@@ -21,13 +24,20 @@ export default function LoginScreen({ navigation }) {
   const [dimensions, setDimensions] = useState(
     Dimensions.get("window").width - 50 * 2
   );
-  const keyboardHide = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
     setIsKeyboardShown(false);
     Keyboard.dismiss();
     console.log(state);
+    dispatch(authSignInUser(state));
     setState(initialState);
   };
 
+  const keyboardHide = () => {
+    Keyboard.dismiss();
+    setIsKeyboardShown(false);
+  };
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width - 50 * 2;
@@ -87,9 +97,9 @@ export default function LoginScreen({ navigation }) {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.btn}
-                onPress={keyboardHide}
+                onPress={handleSubmit}
               >
-                <Text style={styles.btnTitle}>SIGN UP</Text>
+                <Text style={styles.btnTitle}>SIGN IN</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -145,6 +155,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#f0f8ff",
     height: 40,
+    height: 40,
+    fontWeight: "700",
+    fontSize: 30,
     borderRadius: 6,
     color: "#f0f8ff",
   },
