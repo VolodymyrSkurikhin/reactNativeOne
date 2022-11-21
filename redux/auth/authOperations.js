@@ -3,7 +3,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { useDispatch } from "react-redux";
 import db from "../../firebase/config";
+import { authSlice } from "./authReducer";
 
 // const auth = getAuth(db);
 
@@ -11,7 +13,11 @@ export const authSignInUser =
   ({ email, password }) =>
   async (dispatch, getState) => {
     try {
-      const user = await db.auth().signInWithEmailAndPassword(email, password);
+      // dispatch = useDispatch();
+      const { user } = await db
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+
       console.log("user", user);
     } catch (error) {
       console.log("error.message", error.message);
@@ -19,13 +25,14 @@ export const authSignInUser =
   };
 
 export const authSignUpUser =
-  ({ email, password, nickname }) =>
+  ({ email, password, nickName }) =>
   async (dispatch, getState) => {
     try {
-      const user = await db
+      const res = await db
         .auth()
         .createUserWithEmailAndPassword(email, password);
-      console.log("user", user);
+      dispatch(authSlice.actions.updateUserProfile({ userId: res.user.uid }));
+      console.log("res", res);
     } catch (error) {
       console.log("error.message", error.message);
     }

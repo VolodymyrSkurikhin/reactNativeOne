@@ -53,7 +53,7 @@ export default function LoginScreen({ navigation }) {
       <View style={styles.container}>
         <ImageBackground
           style={{ ...styles.image, width: Dimensions.get("window").width }}
-          source={require("../../assets/images/bgr.jpg")}
+          source={require("../../assets/images/bgrN.jpg")}
         >
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}

@@ -52,7 +52,7 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   db.auth().onAuthStateChanged((user) => setUser(user));
-  const routing = useRoute(user);
+  const routing = useRoute(false);
 
   const loadApplication = async () => {
     await Font.loadAsync({

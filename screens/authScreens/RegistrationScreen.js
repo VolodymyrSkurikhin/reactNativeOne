@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 
 import { authSignUpUser } from "../../redux/auth/authOperations";
 
-const initialState = { email: "", password: "", nickname: "" };
+const initialState = { email: "", password: "", nickName: "" };
 
 export default function RegistrationScreen({ navigation }) {
   const [isKeyboardShown, setIsKeyboardShown] = useState(false);
@@ -51,7 +51,7 @@ export default function RegistrationScreen({ navigation }) {
       <View style={styles.container}>
         <ImageBackground
           style={{ ...styles.image, width: Dimensions.get("window").width }}
-          source={require("../../assets/images/bgr.jpg")}
+          source={require("../../assets/images/bgrN.jpg")}
         >
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
