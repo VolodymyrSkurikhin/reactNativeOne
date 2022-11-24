@@ -59,11 +59,16 @@ export default function RegistrationScreen({ navigation }) {
             <View
               style={{
                 ...styles.form,
-                marginBottom: isKeyboardShown ? 20 : 150,
+                // marginBottom: isKeyboardShown ? 20 : 50,
                 width: dimensions,
               }}
             >
-              <View style={styles.header}>
+              <View
+                style={{
+                  ...styles.header,
+                  marginBottom: isKeyboardShown ? 20 : 100,
+                }}
+              >
                 <Text style={styles.title}>Hi</Text>
                 <Text style={styles.title}>Sign up to get started</Text>
               </View>
@@ -73,9 +78,9 @@ export default function RegistrationScreen({ navigation }) {
                   style={styles.input}
                   textAlign={"center"}
                   onFocus={() => setIsKeyboardShown(true)}
-                  value={state.nickname}
+                  value={state.nickName}
                   onChangeText={(value) =>
-                    setState((prevState) => ({ ...prevState, nickname: value }))
+                    setState((prevState) => ({ ...prevState, nickName: value }))
                   }
                 ></TextInput>
               </View>
@@ -142,16 +147,17 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     alignItems: "center",
   },
   form: {},
   header: {
     alignItems: "center",
-    marginBottom: 40,
+    marginTop: 20,
+    // marginBottom: 40,
   },
   title: {
-    fontSize: 40,
+    fontSize: 20,
     color: "#fff",
     fontFamily: "Oswald-SemiBold",
   },

@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     marginBottom: 80,
   },
   title: {
-    fontSize: 40,
+    fontSize: 20,
     color: "#fff",
     fontFamily: "Oswald-SemiBold",
   },

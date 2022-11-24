@@ -3,17 +3,13 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { useDispatch } from "react-redux";
 import db from "../../firebase/config";
 import { authSlice } from "./authReducer";
-
-// const auth = getAuth(db);
 
 export const authSignInUser =
   ({ email, password }) =>
   async (dispatch, getState) => {
     try {
-      // dispatch = useDispatch();
       const { user } = await db
         .auth()
         .signInWithEmailAndPassword(email, password);
@@ -32,6 +28,7 @@ export const authSignUpUser =
       const user = await db.auth().currentUser;
       await user.updateProfile({ displayName: nickName });
       const { uid, displayName } = await db.auth().currentUser;
+      console.log(user);
       dispatch(
         authSlice.actions.updateUserProfile({
           userId: uid,
@@ -43,7 +40,23 @@ export const authSignUpUser =
     }
   };
 
-export const authSignOutUser = () => async (dispatch, getState) => {};
+export const authStateChangeUser = () => async (dispatch, getState) => {
+  await db.auth().onAuthStateChanged((user) => {
+    if (user) {
+      dispatch(
+        authSlice.actions.updateUserProfile({
+          userId: user.uid,
+          nickName: user.displayName,
+        })
+      );
+      dispatch(authSlice.actions.authStateChange({ stateChange: true }));
+    }
+  });
+};
+
+export const authSignOutUser = () => async (dispatch, getState) => {
+  await db.auth().signOut();
+};
 
 // export const authSignUpUser =
 //   ({ email, password, nickname }) =>
