@@ -7,12 +7,13 @@ import { useRoute } from "../router";
 import { authStateChangeUser } from "../redux/auth/authOperations";
 
 export const Main = () => {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const { stateChange } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(authStateChangeUser());
+    console.log("useEffMain");
   }, []);
 
   // db.auth().onAuthStateChanged((user) => setUser(user));

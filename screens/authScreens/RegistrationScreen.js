@@ -54,7 +54,7 @@ export default function RegistrationScreen({ navigation }) {
           source={require("../../assets/images/bgrN.jpg")}
         >
           <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
             <View
               style={{

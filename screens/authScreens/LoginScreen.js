@@ -56,12 +56,12 @@ export default function LoginScreen({ navigation }) {
           source={require("../../assets/images/bgrN.jpg")}
         >
           <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
             <View
               style={{
                 ...styles.form,
-                marginBottom: isKeyboardShown ? 20 : 150,
+                marginBottom: isKeyboardShown ? 20 : 100,
                 width: dimensions,
               }}
             >
@@ -132,10 +132,10 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     alignItems: "center",
   },
-  form: {},
+  form: { marginTop: 20 },
   header: {
     alignItems: "center",
     marginBottom: 80,

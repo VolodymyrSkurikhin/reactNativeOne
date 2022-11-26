@@ -1,8 +1,3 @@
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 import db from "../../firebase/config";
 import { authSlice } from "./authReducer";
 
@@ -55,7 +50,12 @@ export const authStateChangeUser = () => async (dispatch, getState) => {
 };
 
 export const authSignOutUser = () => async (dispatch, getState) => {
-  await db.auth().signOut();
+  try {
+    await db.auth().signOut();
+    dispatch(authSlice.actions.authSignOut());
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 // export const authSignUpUser =
