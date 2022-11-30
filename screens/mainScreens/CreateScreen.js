@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as Location from "expo-location";
+
+import db from "../../firebase/config";
 // import { TouchableOpacity } from "react-native-web";
 
 const CreateScreen = ({ navigation }) => {
@@ -9,6 +18,8 @@ const CreateScreen = ({ navigation }) => {
   const [photo, setPhoto] = useState(null);
   const [ready, setReady] = useState(false);
   const [type, setType] = useState(CameraType.front);
+  const [comment, setComment] = useState("");
+  const [location, setLocation] = useState(null);
   const [cameraPermission, requestCameraPermission] =
     Camera.useCameraPermissions();
   const [locationPermission, requestLocationPermission] =
@@ -23,6 +34,7 @@ const CreateScreen = ({ navigation }) => {
       const photo = await camera.takePictureAsync();
       const location = await Location.getCurrentPositionAsync();
       setPhoto(photo.uri);
+      setLocation(location);
       console.log("photo", photo);
       console.log("latitude", location.coords.latitude);
       console.log("longitude", location.coords.longitude);
@@ -36,7 +48,22 @@ const CreateScreen = ({ navigation }) => {
       current === CameraType.back ? CameraType.front : CameraType.back
     );
   }
+
+  const uploadPhotoToServer = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
+    const uniquePostId = Date.now().toString();
+    const data = await db.storage().ref(`postImage/${uniquePostId}`).put(file);
+    console.log("data", data);
+    const processedPhoto = await db
+      .storage()
+      .ref(`postImage`)
+      .child(uniquePostId)
+      .getDownloadURL();
+    console.log("processedPhoto", processedPhoto);
+  };
   const sendPhoto = () => {
+    uploadPhotoToServer();
     navigation.navigate("DefaultScreenPosts", { photo });
     setPhoto(null);
   };
@@ -46,10 +73,11 @@ const CreateScreen = ({ navigation }) => {
   if (!locationPermission) {
     return <Text>No access to location</Text>;
   }
+
   return (
     <View style={styles.container}>
       <Camera
-        style={{ ...styles.camera, height: photo ? "75%" : "100%" }}
+        style={{ ...styles.camera, height: photo ? "75%" : "90%" }}
         onCameraReady={() => setReady(true)}
         ref={setCamera}
         type={type}
@@ -73,6 +101,12 @@ const CreateScreen = ({ navigation }) => {
       </Camera>
       {photo && (
         <View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              onChangeText={setComment}
+            ></TextInput>
+          </View>
           <TouchableOpacity onPress={sendPhoto} style={styles.sendBtn}>
             <Text style={styles.sendLabel}>SEND</Text>
           </TouchableOpacity>
@@ -85,7 +119,7 @@ const CreateScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
+    justifyContent: "center",
     // alignItems: "center",
   },
   camera: {
@@ -93,7 +127,7 @@ const styles = StyleSheet.create({
     // height: 300,
     // paddingTop: 200,
     // top: 20,
-    // alignItems: "center",
+    alignItems: "center",
     justifyContent: "flex-end",
   },
   takePhotoContainer: {
@@ -144,6 +178,12 @@ const styles = StyleSheet.create({
   sendLabel: {
     color: "#20b2aa",
     fontSize: 20,
+  },
+  inputContainer: { marginHorizontal: 10 },
+  input: {
+    height: 50,
+    borderBottomColor: `#8a2be2`,
+    borderWidth: 1,
   },
 });
 
