@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -20,6 +21,7 @@ const CreateScreen = ({ navigation }) => {
   const [type, setType] = useState(CameraType.front);
   const [comment, setComment] = useState("");
   const [location, setLocation] = useState(null);
+  const { userId, nickName } = useSelector((state) => state.auth);
   const [cameraPermission, requestCameraPermission] =
     Camera.useCameraPermissions();
   const [locationPermission, requestLocationPermission] =
@@ -61,9 +63,21 @@ const CreateScreen = ({ navigation }) => {
       .child(uniquePostId)
       .getDownloadURL();
     console.log("processedPhoto", processedPhoto);
+    return processedPhoto;
   };
-  const sendPhoto = () => {
-    uploadPhotoToServer();
+  const uploadPostToServer = async () => {
+    const photoFromFireSt = await uploadPhotoToServer();
+    await db.firestore().collection("posts").add({
+      photoFromFireSt,
+      comment,
+      location: location.coords,
+      userId,
+      nickName,
+    });
+  };
+  const sendPhoto = async () => {
+    // uploadPhotoToServer();
+    await uploadPostToServer();
     navigation.navigate("DefaultScreenPosts", { photo });
     setPhoto(null);
   };
