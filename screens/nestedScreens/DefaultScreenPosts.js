@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, FlatList, Image, Button } from "react-native";
+import { View, StyleSheet, FlatList, Image, Button, Text } from "react-native";
 
 import db from "../../firebase/config";
 
@@ -39,6 +39,9 @@ export const DefaultScreenPosts = ({ route, navigation }) => {
               source={{ uri: item.photoFromFireSt }}
               style={{ width: 350, height: 200 }}
             />
+            <View>
+              <Text>{item.comment}</Text>
+            </View>
             <View>
               <Button
                 title="go to map"

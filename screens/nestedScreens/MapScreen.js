@@ -1,24 +1,38 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 export const MapScreen = ({ route }) => {
+  // const [mapInitialized, setMapInitialized] = useState(false);
+  const { latitude, longitude } = route.params.location;
   console.log("route.params.location", route.params.location);
+  // const onMapReady = async () => {
+  //   if (mapInitialized) {
+  //     return;
+  //   }
+  //   setMapInitialized(true);
+  //   const initialRegion = {
+  //     latitude: 50.005292,
+  //     longitude: 36.331356,
+  //     latitudeDelta: 0.001,
+  //     longitudeDelta: 0.006,
+  //   };
+  //   return initialRegion;
+  // };
+
   return (
     <View style={styles.container}>
       <MapView
-        style={{ flex: 1 }}
+        style={styles.map}
+        // onLayout={onMapReady}
         initialRegion={{
-          latitude: 50.005292,
-          longitude: 36.331356,
+          latitude,
+          longitude,
           latitudeDelta: 0.001,
           longitudeDelta: 0.006,
         }}
       >
-        <Marker
-          coordinate={{ latitude: 50.005292, longitude: 36.331356 }}
-          title="travel photo"
-        />
+        <Marker coordinate={{ latitude, longitude }} title="travel photo" />
       </MapView>
     </View>
   );
@@ -29,6 +43,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  map: {
+    position: "absolute",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+    flex: 1,
   },
 });
 
