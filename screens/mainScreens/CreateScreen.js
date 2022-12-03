@@ -78,7 +78,7 @@ const CreateScreen = ({ navigation }) => {
   const sendPhoto = async () => {
     // uploadPhotoToServer();
     await uploadPostToServer();
-    navigation.navigate("DefaultScreenPosts", { photo });
+    navigation.navigate("DefaultScreenPosts");
     setPhoto(null);
   };
   if (!cameraPermission) {
