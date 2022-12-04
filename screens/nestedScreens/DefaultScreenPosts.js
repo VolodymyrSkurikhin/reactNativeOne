@@ -50,8 +50,10 @@ export const DefaultScreenPosts = ({ route, navigation }) => {
                 }
               />
               <Button
-                title="go to Comments"
-                onPress={() => navigation.navigate("Comments")}
+                title="add comments"
+                onPress={() =>
+                  navigation.navigate("Comments", { postId: item.id })
+                }
               />
             </View>
           </View>

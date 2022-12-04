@@ -196,8 +196,11 @@ const styles = StyleSheet.create({
   inputContainer: { marginHorizontal: 10 },
   input: {
     height: 50,
-    borderBottomColor: `#8a2be2`,
     borderWidth: 1,
+    borderColor: "#fff",
+    borderBottomColor: `#8a2be2`,
+    shadowColor: "#008b8b",
+    elevation: 2,
   },
 });
 
