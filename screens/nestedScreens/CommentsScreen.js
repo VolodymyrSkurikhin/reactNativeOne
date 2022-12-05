@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   View,
@@ -6,12 +6,18 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  SafeAreaView,
+  FlatList,
 } from "react-native";
 import db from "../../firebase/config";
 
 export const CommentsScreen = ({ route }) => {
   const [comment, setComment] = useState("");
+  const [allComments, setAllComments] = useState([]);
   const { nickName } = useSelector((state) => state.auth);
+  useEffect(() => {
+    getAllComments();
+  }, []);
 
   const { postId } = route.params;
   const createComment = async () => {
@@ -21,14 +27,44 @@ export const CommentsScreen = ({ route }) => {
       .doc(postId)
       .collection("comments")
       .add({ comment, nickName });
+    setComment("");
+  };
+  const getAllComments = async () => {
+    await db
+      .firestore()
+      .collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .onSnapshot((data) =>
+        setAllComments(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      );
   };
   return (
     <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={allComments}
+          renderItem={({ item }) => (
+            <View
+              style={{
+                ...styles.input,
+                marginHorizontal: 10,
+                marginBottom: 10,
+                paddingHorizontal: 10,
+              }}
+            >
+              <Text>{item.nickName}</Text>
+              <Text>{item.comment}</Text>
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      </SafeAreaView>
       <View>
         <View style={styles.inputContainer}>
           <TextInput style={styles.input} onChangeText={setComment}></TextInput>
         </View>
-        <TouchableOpacity onPress={setComment} style={styles.sendBtn}>
+        <TouchableOpacity onPress={createComment} style={styles.sendBtn}>
           <Text style={styles.sendLabel}>ADD COMMENT</Text>
         </TouchableOpacity>
       </View>
