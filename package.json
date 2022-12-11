@@ -10,8 +10,7 @@
     "web": "expo start --web",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint:js": "eslint src/**/*.{js,jsx}"
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.0",
